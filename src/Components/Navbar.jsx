@@ -1,4 +1,4 @@
-
+import { auth } from '../Pages/firebase'
 import React, { useState } from 'react'
 import { assets } from '../assets/assets'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -7,6 +7,19 @@ const Navbar = () => {
     const navigate = useNavigate()
     const [showMenu, setShowMenu] = useState(false)
     const [token, setToken] = useState(false)
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            setToken(true)
+        } else {
+            setToken(false)
+        }
+    }
+    )
+    const handleLogout = () => {
+        auth.signOut()
+        setToken(false)
+        navigate('/')
+    }
   return (
     <div className='flex items-center justify-between py-4 text-sm mb-5 border-b border-gray-400'>
         <img onClick={() => navigate('/')} className='w-44 cursor-pointer' src={assets.logo} alt="" />
@@ -38,12 +51,12 @@ const Navbar = () => {
                     <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4'>
                         <p onClick={()=>navigate('/my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
                         <p onClick={()=>navigate('/my-appointments')} className='hover:text-black cursor-pointer'>My Appointments</p>
-                        <p onClick={() => setToken(false)} className='hover:text-black cursor-pointer'>Logout</p>
+                        <p onClick={handleLogout} className='hover:text-black cursor-pointer'>Logout</p>
                     </div>
                 </div>
             </div>
             :
-            <button onClick={()=> navigate('/login')} className='bg-[#3f5fff] text-white px-8 py-3 rounded-full font-light hidden md:block cursor-pointer'>Create account</button>
+            <button onClick={()=> navigate('/login')} className='bg-[#3f5fff] text-white px-2 py-3 text-xs md:text-[15px] md:px-8 md:py-3 rounded-full font-light md:block cursor-pointer'>Create account</button>
             
         }
             <img onClick={() => setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt="" />
