@@ -44,6 +44,10 @@ const Login = () => {
         toast.success('User logged in successfully',{
           position : 'top-center',
         })
+        localStorage.setItem('user', 'user is here')
+        setEmail('')
+        setPassword('')
+        setName('')
         window.location.href = '/'
       }catch(error){
         console.log(error)
