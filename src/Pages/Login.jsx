@@ -56,6 +56,19 @@ const Login = () => {
       }
     }
   }
+  const loginHandler = () => {
+    if(state === 'Sign Up'){
+      setState('Login')
+      setEmail('')
+      setPassword('')
+      setName('')
+    }else{
+      setState('Sign Up')
+      setEmail('')
+      setPassword('') 
+      setName('')
+    }
+  }
   return (
     <form onSubmit={handleSubmit} className='min-h-[80vh] flex items-center'>
       <div className='flex flex-col gap-4 m-auto p-8 min-w-[340px] sm-min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg'>
@@ -80,8 +93,8 @@ const Login = () => {
 
       {
         state === 'Sign Up' ? 
-        <p className='text-center'>Already have an account? <span onClick={() => setState('Login')} className='text-[#5f6fff] underline cursor-pointer'>Login</span></p> :
-        <p className='text-center'>Don't have an account? <span onClick={() => setState('Sign Up')} className='text-[#5f6fff] underline cursor-pointer'>Create Account</span></p>
+        <p className='text-center'>Already have an account? <span onClick={loginHandler} className='text-[#5f6fff] underline cursor-pointer'>Login</span></p> :
+        <p className='text-center'>Don't have an account? <span onClick={loginHandler} className='text-[#5f6fff] underline cursor-pointer'>Create Account</span></p>
       }
 
       </div>
